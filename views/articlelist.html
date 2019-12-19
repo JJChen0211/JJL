@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章列表</title>
+    <title>好文分享网</title>
+    <link href="../include/css/index.css" media="all" rel="stylesheet" type="text/css">
+    <link href="../include/bootstrap-3.3.7-dist/css/bootstrap.css" media="all" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../include/bitbug_favicon.ico" />
+</head>
+<body style="height: auto;background-color: #f5f5f5">
+<div class="bigbox">
+    <nav class="navbar navbar-inverse" style="flex: 0 0 auto">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1"
+                        data-toggle="collapse" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">好文分享网</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/articleList/">文章</a></li>
+                    <li><a href="/part/">专题</a></li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="请输入搜索内容" style="margin-left: 40vw;width: 20vw;"
+                               type="text">
+                    </div>
+                    <a class="btn btn-info" href="/edit/" style="width: 5vw"><span
+                            class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;发布</a>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if session.get('username')%}
+                    <li class="dropdown">
+                      <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">{{session.get('username')}} <span class="caret"></span></a>
+                      <ul class="dropdown-menu" style="text-align: center;">
+                          <li><a href="/personal/">我的主页</a></li>
+                          <li class="divider" role="separator"></li>
+                          <li><a>{{user['email']}}</a></li>
+                          <li class="divider" role="separator"></li>
+                          <li><a>联系我们</a></li>
+                          <li class="divider" role="separator"></li>
+                          <li><a href="/zhuxiao/">注销</a></li>
+                      </ul>
+                    </li>
+                    {% else %}
+                    <li><a href="/registerPage/">注册/登录</a></li>
+                    {% endif %}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div style="width: 1280px;margin: 0 auto;flex: 0 0 auto">
+        {%for i in data%}
+        <div onclick="window.location.href='/article_Content/?id={{i['ArticleId']}}'" style="width: 1000px;border: 1px solid #ccc;border-radius: 5px; height: 200px;cursor: pointer;margin-top: 10px">
+            <div style="width: 770px;float: left;margin-bottom: 10px;">
+                <h3 style="margin-left: 10px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis">{{i['title']}}</h3>
+                {% autoescape on %}
+                <div style="overflow: hidden;height: 100px;margin-left: 10px">{{i['content']}}</div>
+                {% endautoescape %}
+                <h5 style="text-indent: 2em;overflow: hidden">{{i['creator']}}｜{{i['createTime']}}{% if session.get('username')=='admin' or
+                    i['creator']==session.get('username') %}<a href="/adminEdit/?id={{i['ArticleId']}}">修改</a>｜<a
+                            href="/delete/?id={{i['ArticleId']}}">删除</a>{%endif%}</h5>
+            </div>
+            <div style="width: 15px;float: right;margin-top: 20px;margin-right: 20px;">
+                <img src="../include/images/tp3的副本.png" style="width: 200px;float: right;height: 150px;"/>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div style="float: right;width: 250px;background-color: white;border-radius: 4px;margin-top: -830px">
+            <h4>推荐作者</h4>
+            {% for i in left:%}
+            <div class="tuijian" style="width: 230px;height: 80px;border: 1px solid #ccc;float: right;margin-top: 10px;
+                padding:20px 0 20px 10px;border-radius: 10px;margin:0 10px 10px 10px">
+                <img src="../include/images/touxiang.jpg" style="width: 40px">
+                <h4 style="margin: -33px 0 0 50px"><a href="/personal/">{{i['username']}}</a></h4>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    <div id="footer">
+    <div class="footer-link">
+        <a href="#">关于我们</a>
+        <a href="#">联系我们</a>
+        <a href="#">帮助中心</a>
+        <a href="#">用户协议</a>
+    </div>
+    <div class="footer-record">
+        <p class="record">©2019 - HAOWEN.COM All Rights Reserved<br>
+            <span>浙江信息科技有限公司&nbsp;浙ICP备16033695号-3&nbsp;&nbsp;&nbsp;&nbsp;浙公网安备 31010502003979号</span>
+        </p>
+    </div>
+</div>
+</div>
+<script src="../include/js/jquery3.4.1.js"></script>
+<script src="../include/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</body>
+</html>

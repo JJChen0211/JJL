@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章专题</title>
+    <link href="../include/css/index.css" rel="stylesheet" type="text/css" media="all">
+    <link href="../include/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="shortcut icon" href="../include/bitbug_favicon.ico" />
+</head>
+<body style="height: 2000px">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">好文分享网</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/articleList/">文章</a></li>
+                <li><a href="/part/">专题</a></li>
+            </ul>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="请输入搜索内容"
+                           style="margin-left: 40vw;width: 20vw;">
+                </div>
+                <a class="btn btn-info" style="width: 5vw" href="/edit/"><span
+                        class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;发布</a>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.get('username')%}
+                <li><a href="/">{{session.get('username')}}</a></li>
+                <li><a href="/zhuxiao/">注销</a></li>
+                {% else %}
+                <li><a href="/registerPage/">注册/登录</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+</body>
+</html>

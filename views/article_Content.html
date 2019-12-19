@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{data['title']}}</title>
+    <link href="../include/css/index.css" rel="stylesheet" type="text/css" media="all">
+    <link href="../include/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="text/javascript" src="../include/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
+    <script src="../include/tinymce/js/tinymce/tinymce.min.js"></script>
+    <link rel="shortcut icon" href="../include/bitbug_favicon.ico" />
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+
+        });
+    </script>
+    <style>
+
+    </style>
+</head>
+<body style="height: auto;background-color: #F6F8F8">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1"
+                    data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">好文分享网</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/articleList/">文章</a></li>
+                <li><a href="/part/">专题</a></li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input class="form-control" placeholder="请输入搜索内容" style="margin-left: 40vw;width: 20vw;"
+                           type="text">
+                </div>
+                <a class="btn btn-info" href="/edit/" style="width: 5vw"><span
+                        class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;发布</a>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.get('username')%}
+                <li class="dropdown">
+                  <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">{{session.get('username')}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu" style="text-align: center;">
+                      <li><a href="/personal/">我的主页</a></li>
+                      <li class="divider" role="separator"></li>
+                      <li><a>{{user['email']}}</a></li>
+                      <li class="divider" role="separator"></li>
+                      <li><a>联系我们</a></li>
+                      <li class="divider" role="separator"></li>
+                      <li><a href="/zhuxiao/">注销</a></li>
+                  </ul>
+                </li>
+                {% else %}
+                <li><a href="/registerPage/">注册/登录</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div style="width: 971px;margin: 0 auto;background-color:white;border-radius: 4px">
+    {% autoescape on %}
+    <h1 style="padding: 20px 0 0 30px">{{data['title']}}</h1>
+    <img src="../include/images/touxiang.jpg" style="width: 40px;margin-left: 30px">
+    <h4 style="font-size: 25px;color: #007bff;padding: 20px 0 0 30px;margin: -50px 0 0 50px">{{data['creator']}}</h4>
+    <h4 style="padding: 20px 0 0 30px;color: #bcc7d7;font-size: 16px">{{data['createTime']}}</h4>
+    <!--<span style="text-indent: 2em">{{data['content']}}</span>-->
+    <div style="width: 921px;margin-left: 30px;padding-bottom: 10px">
+       {{data['content']}}
+    </div>
+    {% endautoescape %}
+</div>
+<div style="width: 1280px;margin: 0 auto;min-height: 200px;position: relative">
+
+   {%if not tag%}
+    <div style="text-align: center; margin-top: 20px;position: relative">
+        <form method="post" action="/insertComment/" style="text-align: center">
+        <textarea placeholder="发表评论..." name="content" style="height: 70px;width: 75%;padding: 4px 11px;border-radius: 4px" ></textarea>
+        <input type="hidden" value="{{id}}" name="id"><br>
+        <div style="position: absolute;right: 12.5%">
+            <input type="submit" value="发表评论" class="btn btn-info">
+        </div>
+        </form>
+    </div>
+
+
+    <div style="margin-top: 100px;width: 75%;position: absolute;left: 12.5%">
+        <h4>评论</h4><br>
+        {% for i in comment %}
+        {% autoescape on %}
+        <img src="../include/images/touxiang.jpg" style="width: 40px;"><span style="margin-left: 10px; font-size: 20px">{{i['creator']}}</span>
+        <p style="text-indent: 3.7em;font-size: 14px;color:#3c3c3c">{{i['content']}}</p>
+        <span style="float: right;font-size: 12px;margin-right: 10px;">{{i['createTime']}}{% if session.get('username')=='admin' or i['creator']==session.get('username') %}
+        <a href="/delete_comment/?id={{i['commentId']}}&page={{id}}" style="">删除</a>
+        {%endif%}</span>
+
+        <hr>
+        {% endautoescape %}
+        {% endfor %}
+    </div>
+{% else %}
+     {% autoescape on %}
+    {{comment1}}
+    {% endautoescape %}
+    {% endif %}
+
+</div>
+<script src="../include/js/jquery3.4.1.js"></script>
+<script src="../include/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script>
+    $(function () {
+        tinymce.init({
+            //选择class为content的标签作为编辑器
+            selector: '#rich_content',
+            //方向从左到右
+            directionality: 'ltr',
+            //语言选择中文
+            language: 'zh_CN',
+            //高度为400
+            height: 400,
+            width: '100%',
+            //按tab不换行
+            nonbreaking_force_tab: true,
+            readonly: 1
+        });
+    })
+</script>
+</body>
+</html>

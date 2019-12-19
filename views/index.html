@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>好文分享网</title>
+    <!--<link href="../include/css/index.css" rel="stylesheet" type="text/css" media="all">-->
+    <link href="../include/css/index.css" rel="stylesheet">
+    <link href="../include/bootstrap-3.3.7-dist/css/bootstrap.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="../include/bitbug_favicon.ico" rel="shortcut icon" />
+</head>
+<body style="background-color: #f5f5f5">
+<div class="bigbox">
+<nav class="navbar navbar-inverse" style="flex: 0 0 auto">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1"
+                    data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">好文分享网</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/articleList/">文章</a></li>
+                <li><a href="/part/">专题</a></li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input class="form-control" placeholder="请输入搜索内容" style="margin-left: 40vw;width: 20vw;"
+                           type="text">
+                </div>
+                <a class="btn btn-info" href="/edit/" style="width: 5vw"><span
+                        class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;发布</a>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.get('username')%}
+                <li class="dropdown">
+                  <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">{{session.get('username')}} <span class="caret"></span></a>
+                  <ul class="dropdown-menu" style="text-align: center;">
+                      <li><a href="/personal/">我的主页</a></li>
+                      <li class="divider" role="separator"></li>
+                      <li><a>{{user['email']}}</a></li>
+                      <li class="divider" role="separator"></li>
+                      <li><a>联系我们</a></li>
+                      <li class="divider" role="separator"></li>
+                      <li><a href="/zhuxiao/">注销</a></li>
+                  </ul>
+                </li>
+                {% else %}
+                <li><a href="/registerPage/">注册/登录</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div style="width: 1280px;margin: 0 auto;flex: 0 0 auto">
+    <div style="float: left;width: 1000px;">
+        <div class="carousel slide" data-ride="carousel" id="carousel-example-generic" style="height: 228px">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li class="active" data-slide-to="0" data-target="#carousel-example-generic"></li>
+                <li data-slide-to="1" data-target="#carousel-example-generic"></li>
+                <li data-slide-to="2" data-target="#carousel-example-generic"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox" style="height: 228px">
+                <div class="item active">
+                   <a href="article_Content/?id=1"><img height="100%" src="../include/images/2019-12-19142804604519.jpg"></a>
+                </div>
+                {% for i in image :%}
+                <div class="item">
+                    <a href="article_Content/?id={{i['ImageId']}}"><img src="{{i['image']}}" height="100%"/></a>
+                </div>
+                {% endfor %}
+                <!--<div class="item">-->
+                    <!--<img height="228px" src="../include/images/2019-12-17084826448004.jpg">-->
+                <!--</div>-->
+                <!--<div class="item">-->
+                    <!--<img src="../include/images/2019-12-17084826448004.jpg">-->
+                <!--</div>-->
+            </div>
+
+
+            <!-- Controls -->
+            <a class="left carousel-control" data-slide="prev" href="#carousel-example-generic" role="button">
+                <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" data-slide="next" href="#carousel-example-generic" role="button">
+                <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+
+        <h3>推荐<a class="glyphicon glyphicon-repeat" style="float: right;font-size: 15px;font-weight: bold;">换一换</a></h3>
+
+
+        {% for i in data:%}
+        <div class="list_div">
+        <!--<div class="list_div" onmousemove="this.className='list_up'" onmouseout="this.className='list_div'">-->
+            <a href="/article_Content/?id={{i['ArticleId']}}" class="suofang" style="text-decoration: none;">
+                <img src="{{ i['image'] }}" style="width: 300px;height: 300px; border-radius: 10px;">
+            </a>
+            <!--<div class="cnt">-->
+                <!--<p>{{i['content']}}</p>-->
+            <!--</div>-->
+            <h4><a href="/article_Content/?id={{i['ArticleId']}}">{{i['title']}}</a></h4>
+            <span><a href="/article_Content/?id={{i['ArticleId']}}">{{i['creator']}}</a></span>
+            <!--<span class="glyphicon glyphicon-bookmark"></span>-->
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div style="float: right;width: 250px;background-color: white;border-radius: 4px;">
+        <h4>推荐作者</h4>
+        {% for i in left:%}
+        <div class="tuijian" style="width: 230px;height: 80px;border: 1px solid #ccc;float: right;margin-top: 10px;
+            padding:20px 0 20px 10px;border-radius: 10px;margin:0 10px 10px 10px">
+            <img src="../include/images/touxiang.jpg" style="width: 40px">
+            <h4 style="margin: -33px 0 0 50px"><a href="/personal/">{{i['username']}}</a></h4>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+<script src="../include/js/jquery3.4.1.js"></script>
+<script src="../include/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<!--<script src="../include/js/footer.js"></script>-->
+<div id="footer">
+    <div class="footer-link">
+        <a href="#">关于我们</a>
+        <a href="#">联系我们</a>
+        <a href="#">帮助中心</a>
+        <a href="#">用户协议</a>
+    </div>
+    <div class="footer-record">
+        <p class="record">©2019 - HAOWEN.COM All Rights Reserved<br>
+            <span>浙江信息科技有限公司&nbsp;浙ICP备16033695号-3&nbsp;&nbsp;&nbsp;&nbsp;浙公网安备 31010502003979号</span>
+        </p>
+    </div>
+</div>
+</div>
+</body>
+</html>

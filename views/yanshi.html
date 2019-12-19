@@ -1,0 +1,98 @@
+<!--<html>-->
+<!--<head>-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+<!--<title>示例</title>-->
+<!--<style type="text/css">-->
+<!--/*.d1{*/-->
+<!--/*margin-top:100px;*/-->
+<!--/*border:1px solid red;*/-->
+<!--/*width:200px;*/-->
+<!--/*height:200px;*/-->
+<!--/*text-align:center;*/-->
+<!--/*line-height:200px;*/-->
+<!--/*}*/-->
+<!--/*.d2{*/-->
+<!--/*margin-top:80px;*/-->
+<!--/*border:1px solid red;*/-->
+<!--/*width:200px;*/-->
+<!--/*height:200px;*/-->
+<!--/*text-align:center;*/-->
+<!--/*line-height:200px;*/-->
+<!--/*}*/-->
+<!--.listitem{-->
+    <!--width: 100px;-->
+    <!--height: 160px;-->
+    <!--margin-left: 20px;-->
+    <!--margin-top: 20px;-->
+    <!--overflow: hidden;-->
+
+<!--}-->
+<!--.listitemimage{-->
+    <!--width:100px ;-->
+    <!--height: 100px;-->
+    <!--background: url("../include/images/2019-12-17154650645522.jpg");-->
+    <!--transition:all 0.6s;-->
+<!--}-->
+
+<!--.listitemimage:hover{-->
+    <!--width:100px ;-->
+    <!--height: 100px;-->
+    <!--transform: scale(1.4);-->
+    <!--overflow: hidden;-->
+<!--}-->
+<!--</style>-->
+<!--</head>-->
+<!--&lt;!&ndash;<div class="d1" onMouseMove="this.className='d2'" onMouseOut="this.className='d1'">这是一个示例..</div>&ndash;&gt;-->
+  <!--<div class="listitem fl">-->
+        <!--<img class="listitemimage">-->
+        <!--<span>大个云南蒙自石榴（礼盒装</span>-->
+        <!--<span>￥128.00/12个</span>-->
+      <!--</div>-->
+<!--<body>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>transform、transform 图片拉近 优化</title>
+        <style>
+            *{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    height: 100%;
+}
+#container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+header{
+    background: #999;
+    flex: 0 0 auto;
+}
+.main{
+    background: orange;
+    flex: 1 0 auto;
+}
+footer{
+    background: #333;
+    flex: 0 0 auto;
+}
+
+        </style>
+    </head>
+
+    <body>
+
+<div id="container">
+    <header>HEADER</header>
+    <section class="main">MAIN</section>
+    <footer>FOOTER</footer>
+</div>
+
+    </body>
+</html>
